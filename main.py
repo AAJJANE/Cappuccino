@@ -1,19 +1,21 @@
 import sqlite3
 
-from PyQt6 import QtWidgets, uic
-from PyQt6.QtWidgets import QTableWidgetItem, QMainWindow, QMessageBox
+from PyQt6 import QtWidgets
+from PyQt6.QtWidgets import QTableWidgetItem, QMainWindow, QMessageBox, QWidget
+from release.UI.add_edit_coffee_form_ui import Ui_AddCoffee
+from release.UI.main_ui import Ui_qwidget
 
 
-class CoffeeApp(QMainWindow):
+class CoffeeApp(QMainWindow, Ui_qwidget):
     def __init__(self):
         super(CoffeeApp, self).__init__()
-        uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.load_data()
 
         self.addButton.clicked.connect(self.open_add_edit_form)
 
     def load_data(self):
-        conn = sqlite3.connect('coffee.sqlite')
+        conn = sqlite3.connect('release/data/coffee.sqlite')
         cursor = conn.cursor()
         coffee_data = cursor.execute("SELECT * FROM info").fetchall()
         self.tableWidget.setRowCount(len(coffee_data))
@@ -35,15 +37,15 @@ class CoffeeApp(QMainWindow):
             print(e)
 
 
-class AddEditCoffeeForm(QtWidgets.QWidget):
+class AddEditCoffeeForm(QWidget, Ui_AddCoffee):
     def __init__(self):
         super(AddEditCoffeeForm, self).__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.saveBtn.clicked.connect(self.save_data)
         self.main_win = None
 
     def save_data(self):
-        conn = sqlite3.connect('coffee.sqlite')
+        conn = sqlite3.connect('release/data/coffee.sqlite')
         cursor = conn.cursor()
         name = self.sortLine.text()
         roast = self.roastCombo.currentText()

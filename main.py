@@ -1,7 +1,7 @@
 import sqlite3
+
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtCore import QLine
-from PyQt6.QtWidgets import QTableWidgetItem, QMainWindow, QPushButton, QCheckBox, QComboBox, QLineEdit, QMessageBox
+from PyQt6.QtWidgets import QTableWidgetItem, QMainWindow, QMessageBox
 
 
 class CoffeeApp(QMainWindow):
